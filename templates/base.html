@@ -1,0 +1,287 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel = "stylesheet" href = "{% static 'css/style.css' %}"/>
+    <title>Matu décor</title>
+    <style>
+        /* RESET */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+}
+
+header {
+    background: linear-gradient(rgba(0, 0, 0, 0.6));
+    background-size: cover;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    border-bottom: 2px solid #ddd;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 28px;
+    color: white;
+    
+}
+h1 span {
+    color: #FFD700;
+}
+
+
+.decor {
+    color: gold;
+    font-weight: bold;
+}
+
+/* MENU */
+nav {
+    margin-top: 10px;
+}
+
+nav a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+nav a:hover {
+    color: gold;
+}
+nav a.active {
+    color: #FFD700;
+    border-bottom: 2px solid #FFD700;
+}
+
+section {
+    padding: 20px;
+}
+
+/* TITRE SECTION */
+h2 {
+    text-align: center;
+}
+
+/* CARTES PRODUITS */
+.services {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.card {
+    background: white;
+    width: 250px;
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+
+.card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+.card video {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+
+.btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px;
+    background: #28a745;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+
+footer {
+    text-align: center;
+    padding: 15px;
+    background: #222;
+    color: white;
+    border-top: 2px solid #ddd;
+    margin-top: 20px;
+}
+
+
+.hero {
+    text-align: center;
+    padding: 50px 20px;
+    background: #f9f9f9;
+    font-family: Arial, sans-serif;
+}
+
+.hero h1 {
+    font-size: 32px;
+    color: #222;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+.hero ul {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+.hero ul li {
+    font-size: 18px;
+    margin: 8px 0;
+}
+
+.slogan {
+    margin-top: 25px;
+    font-size: 20px;
+    color: #d4af37; /* couleur dorée */
+    font-weight: bold;
+}
+.video-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.video-container video {
+    margin-top: 20px
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+.carousel {
+    position: relative;
+    max-width: 100%;
+    height: 250px;
+    overflow: hidden;
+    margin-bottom: 30px;
+}
+
+.slide {
+    display: none;
+    width: 100%;
+    height: 100%;
+}
+
+.slide.active {
+    display: block;
+}
+
+.slide img,
+.slide video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.prev, .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.prev { left: 10px; }
+.next { right: 10px; }
+
+    </style>
+    <!-- CSS -->
+<style>
+.video-carousel { max-width:600px; margin:30px auto; overflow:hidden; }
+.video-item { display:none; text-align:center; }
+.video-item.active { display:block; }
+.video-item video { width:100%; border-radius:10px; }
+.prev, .next { cursor:pointer; position:absolute; top:50%; padding:10px; font-size:24px; background:rgba(0,0,0,0.5); color:#fff; border-radius:50%; }
+.prev { left:10px; } .next { right:10px; }
+</style>
+
+<!-- JS -->
+<script>
+let videoIndex = 0;
+showVideo(videoIndex);
+function plusVideo(n) { showVideo(videoIndex += n); }
+function showVideo(n) {
+    const videos = document.querySelectorAll('.video-item');
+    if(n >= videos.length) videoIndex = 0;
+    if(n < 0) videoIndex = videos.length - 1;
+    videos.forEach(v => v.classList.remove('active'));
+    videos[videoIndex].classList.add('active');
+}
+</script>
+</head>
+<script>
+let index = 0;
+showSlide(index);
+
+function changeSlide(n) {
+    showSlide(index += n);
+}
+
+function showSlide(n) {
+    let slides = document.querySelectorAll(".slide");
+
+    if (n >= slides.length) index = 0;
+    if (n < 0) index = slides.length - 1;
+
+    slides.forEach(slide => slide.classList.remove("active"));
+    slides[index].classList.add("active");
+}
+
+setInterval(() => {
+    changeSlide(1);
+}, 4000);
+</script>
+<body>
+    <header>
+        <h1>MATU <span>DÉCOR</span></h1>
+
+        <p>Mariages • Anniversaires • Cérémonies • Événements</p>
+        <nav>
+            <a href="/">Accueil</a>
+            <a href="/produits">produits</a>
+            
+        </nav>
+
+    </header>
+
+    
+{% block content %}
+
+{% endblock %}
+<footer>
+    <p>📞 WhatsApp : +243 895715240</p>
+    <p>© 2026 MATU DÉCOR – Location de Chaises & Décoration</p> 
+
+</footer>
+</body>
+</html>

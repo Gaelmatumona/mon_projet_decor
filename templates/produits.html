@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="carousel">
+    {% for media in medias %}
+        <div class="slide {% if forloop.first %}active{% endif %}">
+            {% if media.type == 'image' %}
+                <img src="{{ media.fichier.url }}">
+            {% elif media.type == 'video'%}
+                <video muted autoplay loop>
+                    <source src="{{ media.fichier.url }}"></video>
+            {% endif %}
+        </div>
+    {% endfor %}
+    <button class="prev" onclick="changeSlide(-1)"><</button>
+    <button class="next" onclick="changeSlide(1)">></button>
+
+</div>
+
+<h2>Nos produits</h2>
+<div class="container">
+    {% for p in produits %}
+        <div class="card">
+            {% for image in p.imageproduit_set.all %}
+                <img src="{{ image.image.url }}" alt="image de {{ p.nom }}"
+            style="width:100%; height:150px;">
+
+                {% empty %}
+                    <p>Pas d'image</p>
+                {% endfor %}
+
+
+
+            <h3>{{ p.nom }}</h3>
+            <p>Prix : {{ p.prix|floatformat:0 }} {{ p.get_devise_display }}</p>
+            <a class="btn" href="#" onclick="envoyerMessage('{{ p.nom }}')">
+    Commander
+</a>
+        </div>
+    {% endfor %}
+</div>
+
+<h2 style="text-align:center; margin-top:40ppx;">Galerie</h2>
+<div class="video-container">
+    {% for media in medias %}
+        <div class="card">
+            {% if media.type == 'image' %}
+                <img src ="{{ media.fichier.url }}">
+            {% elif media.type == 'video' %}
+                
+                <video controls style="width:300px; margin: 10px;">
+                <source src="{{ media.fichier.url }}" type="video/mp4">
+            </video>
+            {% endif %}
+        </div>
+    
+    {% endfor %}
+
+</div>
+
+<script>
+function envoyerMessage(produit) {
+    let heure = new Date().getHours();
+    let message = "";
+
+    if (heure < 12) {
+        message = "Bonjour";
+    } else if (heure < 18) {
+        message = "Bon après-midi";
+    } else {
+        message = "Bonsoir";
+    }
+
+    let texte = message + " MATU DÉCOR, je souhaite commander " + produit;
+
+    let url = "https://wa.me/243895715240?text=" + encodeURIComponent(texte);
+
+    window.open(url, "_blank");
+}
+</script>
+    
+{% endblock %}
