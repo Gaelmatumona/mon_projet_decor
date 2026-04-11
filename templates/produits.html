@@ -22,8 +22,11 @@
     {% for p in produits %}
         <div class="card">
             {% for image in p.imageproduit_set.all %}
-                <img src="{{ image.image.url }}" alt="image de {{ p.nom }}"
+                <img src="{{ image.image.url }}"onclick="openImage(this.src)" alt="image de {{ p.nom }}"
             style="width:100%; height:150px;">
+            <div id="imageModal" class="modal"onclick="closeImage()">
+                <img id="modalImage">
+            </div>
 
                 {% empty %}
                     <p>Pas d'image</p>
@@ -33,11 +36,13 @@
 
             <h3>{{ p.nom }}</h3>
             <p>Prix : {{ p.prix|floatformat:0 }} {{ p.get_devise_display }}</p>
-            <a class="btn" href="#" onclick="envoyerMessage('{{ p.nom }}')">
+            <a class="btn" href="https://wa.me/243895715240" onclick="envoyerMessage('{{ p.nom }}')">
     Commander
 </a>
+
         </div>
     {% endfor %}
+    
 </div>
 
 <h2 style="text-align:center; margin-top:40ppx;">Galerie</h2>
